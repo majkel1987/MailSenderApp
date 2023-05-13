@@ -1,0 +1,86 @@
+﻿@model IEnumerable<MailSenderApp.Models.Domains.EmailParams>
+@{
+    ViewBag.Title = "Konta email do wysyłania wiadomości";
+}
+
+<h1 class="mb-4">Konta email do wysyłania wiadomości</h1>
+
+<button type="button" class="btn btn-outline-success mb-3"
+        onclick='window.location.href="@Url.Action("EmailParameters","Home")"'>
+    Dodaj konto
+</button>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-hover table-striped mt-3 mb-5">
+        <thead>
+            <tr>
+                <th scope="col">Nazwa konta</th>
+                <th scope="col">Email</th>
+                <th scope="col">Host Smtp</th>
+                <th scope="col">Port</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var account in Model)
+            {
+                <tr>
+                    <td>
+                        <a href="@Url.Action("EmailParameters","Home", new { id = account.Id})">@account.SenderName</a>
+                    </td>
+                    <td>@account.SenderEmail</td>
+                    <td>@account.HostSmtp</td>
+                    <td>@account.Port</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm"
+                                onclick="deleteAccount('@account.Id', this)">
+                            Usuń konto
+                        </button>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div>
+        Brak dodanych kont
+    </div>
+}
+
+@section Scripts
+{
+    <script type="text/javascript">
+        function deleteAccount(id, btn)
+        {
+            if (!confirm("Czy napewno chcesz usunąć konto?"))
+                return;
+
+            $.ajax({
+                type: 'POST',
+                url: "@Url.Action("DeleteAccount","Home")",
+                data: { id: id },
+                success: function (data)
+                {
+                    if (data.Success)
+                    {
+                        var row = btn.parentNode.parentNode;
+                        row.parentNode.removeChild(row);
+                    }
+                    else
+                    {
+                        alert(data.Message);
+                    }
+                },
+                error: function (data)
+                {
+                    alert(data.Message);
+                },
+                datatype: 'json'
+            });
+        }
+    </script>
+}

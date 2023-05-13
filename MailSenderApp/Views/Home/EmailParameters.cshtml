@@ -1,0 +1,83 @@
+﻿@model MailSenderApp.Models.ViewModels.EmailParamsViewModel
+
+@{
+    ViewBag.Title = Model.Heading;
+}
+
+<h2 class="mb-3">@Model.Heading</h2>
+
+<div class="row">
+    <div class="col-lg-6">
+        @using (Html.BeginForm("EmailParameters", "Home"))
+        {
+            @Html.AntiForgeryToken()
+
+            if (Model.EmailParameters.Id == 0)
+            {
+                <p class="alert alert-info mt-4 mb-4">
+                    Wszystkie pola są <strong>wymagane</strong>
+                </p>
+            }
+
+            @Html.HiddenFor(x => x.EmailParameters.Id)
+            @Html.HiddenFor(x => x.EmailParameters.UserId)
+
+            <div class="form-group mt-3">
+                @Html.LabelFor(x => x.EmailParameters.HostSmtp, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.EmailParameters.HostSmtp, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.EmailParameters.HostSmtp)
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                @Html.LabelFor(x => x.EmailParameters.EnableSsl, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(x => x.EmailParameters.EnableSsl, new
+                    { @class="form-check-input", type="checkbox", value="true", id= Model.EmailParameters.EnableSsl })
+                    @Html.ValidationMessageFor(x => x.EmailParameters.EnableSsl)
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                @Html.LabelFor(x => x.EmailParameters.Port, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.EmailParameters.Port, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.EmailParameters.Port)
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                @Html.LabelFor(x => x.EmailParameters.SenderEmail, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.EmailParameters.SenderEmail, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.EmailParameters.SenderEmail)
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                @Html.LabelFor(x => x.EmailParameters.SenderEmailPassword, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.EmailParameters.SenderEmailPassword, new
+                    { @class = "form-control", type = "password" })
+                    @Html.ValidationMessageFor(x => x.EmailParameters.SenderEmailPassword)
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                @Html.LabelFor(x => x.EmailParameters.SenderName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.EmailParameters.SenderName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.EmailParameters.SenderName)
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-primary mt-3 mb-5" value="Zapisz" />
+                </div>
+            </div>
+
+        }
+    </div>
+ </div>

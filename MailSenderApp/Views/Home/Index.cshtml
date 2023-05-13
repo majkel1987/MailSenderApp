@@ -1,0 +1,89 @@
+﻿@model IEnumerable<MailSenderApp.Models.Domains.Email>
+@{
+    ViewBag.Title = "Wysłane wiadomości";
+}
+
+<h1 class="mb-4">Wysłane wiadomości</h1>
+
+<button type="button" class="btn btn-outline-primary mb-3" 
+        onclick='window.location.href="@Url.Action("Email","Home")"'>
+            Wyślij nową wiadomość
+</button>
+<button type="button" class="btn btn-outline-primary mb-3"
+        onclick='window.location.href="@Url.Action("Accounts","Home")"'>
+            Konta e-mail
+</button>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-hover table-striped mt-3 mb-5">
+        <thead>
+            <tr>
+                <th scope="col">Data wysłania</th>
+                <th scope="col">Adresat</th>
+                <th scope="col">DW</th>
+                <th scope="col">Tytuł wiadomości</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var email in Model)
+            {
+                <tr>
+                    <td>@email.SentDate.ToString("G")</td>
+                    <td>@email.RecipientAddress</td>
+                    <td>@email.CcAddress</td>
+                    <td>
+                        <a href="@Url.Action("Email","Home", new { id = email.Id})">@email.Title</a>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger btn-sm"
+                                onclick="deleteEmail('@email.Id', this)">
+                            Usuń wiadomość
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div>
+        Brak wysłanych wiadomości
+    </div>
+}
+
+@section Scripts
+{
+    <script type="text/javascript">
+        function deleteEmail(id, btn)
+        {
+            if (!confirm("Czy napewno chcesz usunąć wiadomość?"))
+                return;
+
+            $.ajax({
+                type: 'POST',
+                url: "@Url.Action("DeleteEmail","Home")",
+                data: { id: id },
+                success: function (data)
+                {
+                    if (data.Success)
+                    {
+                        var row = btn.parentNode.parentNode;
+                        row.parentNode.removeChild(row);
+                    }
+                    else
+                    {
+                        alert(data.Message);
+                    }
+                },
+                error: function (data)
+                {
+                    alert(data.Message);
+                },
+                datatype: 'json'
+            });
+        }
+    </script>
+}
