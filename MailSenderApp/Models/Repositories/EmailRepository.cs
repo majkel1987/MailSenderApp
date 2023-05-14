@@ -1,4 +1,5 @@
 ﻿using MailSenderApp.Models.Domains;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,19 @@ namespace MailSenderApp.Models.Repositories
         {
             using (var context = new ApplicationDbContext())
             {
-                email.SentDate = DateTime.Now;
-                context.Emails.Add(email);
-                context.SaveChanges();
+              
+                    var emailDb = new Email();
+                    emailDb.SentDate = DateTime.Now;
+                    emailDb.CcAddress = email.CcAddress;
+                    emailDb.RecipientAddress = email.RecipientAddress;
+                    emailDb.UserId = email.UserId;
+                    emailDb.Title = email.Title;
+                    emailDb.Message = email.Message;
+                    emailDb.EmailParamsId = email.EmailParamsId;
+
+                    context.Emails.Add(emailDb);
+                    context.SaveChanges();
+  
             }
         }
 

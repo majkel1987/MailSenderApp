@@ -68,13 +68,13 @@
                         CcAddress = c.String(),
                         Message = c.String(nullable: false),
                         UserId = c.String(nullable: false, maxLength: 128),
-                        EmailParams_Id = c.Int(),
+                        EmailParamsId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.EmailParams", t => t.EmailParams_Id)
+                .ForeignKey("dbo.EmailParams", t => t.EmailParamsId, cascadeDelete: true)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId)
                 .Index(t => t.UserId)
-                .Index(t => t.EmailParams_Id);
+                .Index(t => t.EmailParamsId);
             
             CreateTable(
                 "dbo.AspNetUserLogins",
@@ -119,14 +119,14 @@
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Emails", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Emails", "EmailParams_Id", "dbo.EmailParams");
+            DropForeignKey("dbo.Emails", "EmailParamsId", "dbo.EmailParams");
             DropForeignKey("dbo.EmailParams", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
-            DropIndex("dbo.Emails", new[] { "EmailParams_Id" });
+            DropIndex("dbo.Emails", new[] { "EmailParamsId" });
             DropIndex("dbo.Emails", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");

@@ -180,9 +180,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202305131323355_Init.cs" />
-    <Compile Include="Migrations\202305131323355_Init.designer.cs">
-      <DependentUpon>202305131323355_Init.cs</DependentUpon>
+    <Compile Include="Migrations\202305141300118_Init.cs" />
+    <Compile Include="Migrations\202305141300118_Init.designer.cs">
+      <DependentUpon>202305141300118_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Domains\ApplicationUser.cs" />
@@ -543,8 +543,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202305131323355_Init.resx">
-      <DependentUpon>202305131323355_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202305141300118_Init.resx">
+      <DependentUpon>202305141300118_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

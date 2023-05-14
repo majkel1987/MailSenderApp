@@ -48,7 +48,8 @@ namespace MailSenderApp.Controllers
             {
                 _emailSender = new EmailSender(emailParameters);
                 await _emailSender.Send(email);
-                
+                _emailRepository.AddMail(email);
+
             }
             catch (Exception ex)
             {

@@ -32,6 +32,8 @@ namespace MailSenderApp.Models.Domains
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
 
+        [Required, Display(Name = "Email nadawcy:")]
+        public int EmailParamsId { get; set; }
         public EmailParams EmailParams { get; set; }
     }
 }
