@@ -11,6 +11,9 @@
     <button class="btn btn-secondary mb-3" onclick="generatePdf()">
         Generuj PDF
     </button>
+    <button class="btn btn-secondary mb-3" onclick="printEmail()">
+        Drukuj
+    </button>
 }
 
 <div class="row">
@@ -31,7 +34,7 @@
 
             <div class="form-group mt-3">
                 @Html.LabelFor(x => x.Email.EmailParams.Id)
-                @Html.DropDownListFor(x => x.Email.EmailParams.Id, new SelectList(Model.EmailParameters, "Id", "SenderEmail"),
+                @Html.DropDownListFor(x => x.Email.EmailParams.Id, new SelectList(Model.EmailParameters, "Id", "SenderName"),
                     "--Wybierz konto--", new { @class = "form-control" })
             </div>
 
@@ -89,9 +92,34 @@
     </script>
 
     <script type="text/javascript">
-        function generatePDF() {
+
+        function generatePdf() {
+
+            $.ajax({
+                type: 'POST',
+                url: "@Url.Action("EmailToPdf", "Print")",
+                data: {
+                    id: '@Model.Email.Id'
+                },
+                success: function (data) {
+                    window.location = '@Url.Action("DownloadEmailPdf", "Print")' + '?fileGuid=' + data.FileGuid + '&fileName=' + data.FileName;
+                },
+                error: function (data) {
+                    alert(data.Message);
+                },
+                dataType: 'json',
+                cache: false
+            });
 
         }
+
+        function printEmail() {
+
+            var windowUrl = '@Url.Action("PrintEmail", "Print")' + '?id=' + '@Model.Email.Id';
+            var printWindow = window.open(windowUrl, '', 'top = 100, left = 200, width = 500, height = 500');
+            printWindow.print();
+        }
+
 
         $(document).ready(function () {
 

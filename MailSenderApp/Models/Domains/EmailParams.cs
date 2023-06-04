@@ -10,6 +10,7 @@ namespace MailSenderApp.Models.Domains
 {
     public class EmailParams
     {
+        [Display(Name = "Konto:")]
         public int Id { get; set; }
 
         [Required, Display(Name = "Host SMTP:")]

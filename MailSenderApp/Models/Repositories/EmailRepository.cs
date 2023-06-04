@@ -37,7 +37,7 @@ namespace MailSenderApp.Models.Repositories
                     emailDb.UserId = email.UserId;
                     emailDb.Title = email.Title;
                     emailDb.Message = email.Message;
-                    emailDb.EmailParamsId = email.EmailParamsId;
+                    emailDb.EmailParamsId = email.EmailParams.Id;
 
                     context.Emails.Add(emailDb);
                     context.SaveChanges();

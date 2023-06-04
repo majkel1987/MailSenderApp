@@ -56,7 +56,7 @@ namespace MailSenderApp.Controllers
                 Logger.Error(ex, ex.Message);
             
             }
-            _emailRepository.AddMail(email);
+            
             return RedirectToAction("Index");
         
         }
