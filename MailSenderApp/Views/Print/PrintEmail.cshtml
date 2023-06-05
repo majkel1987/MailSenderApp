@@ -10,14 +10,14 @@
 
         <div class="row mt-2 mb-3">
             <div class="col-12 header-font text-start fs-4">
-                <div>Mail Sender App</div></div>
+                <div>@Model.EmailParams.SenderEmail</div></div>
                 <hr class="hr hr-blurry" />
             </div>
         </div>
 
         <div class="row mt-2">
             <div class="col-8">
-                <div class="text-start fs-5"><strong>Wysłana wiadomość:</strong></div>
+                <div class="text-start fs-5"><strong>Od:</strong>@Model.EmailParams.SenderName</div>
                 <div class="text-start fs-5"><strong>Do:</strong>@Model.RecipientAddress</div>
                 <div class="text-start fs-5"><strong>DW:</strong>@Model.CcAddress</div>
                 <div class="text-start fs-5"><strong>Data wysłania:</strong>@Model.SentDate.ToString("g")</div>

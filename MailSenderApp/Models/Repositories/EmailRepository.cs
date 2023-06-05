@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace MailSenderApp.Models.Repositories
 {
@@ -21,7 +22,7 @@ namespace MailSenderApp.Models.Repositories
         {
             using (var context = new ApplicationDbContext())
             {
-                return context.Emails.Single(x => x.Id == id && x.UserId == userId);
+                return context.Emails.Include(x => x.EmailParams).Single(x => x.Id == id && x.UserId == userId);
             }
         }
 
